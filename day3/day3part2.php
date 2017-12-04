@@ -1,5 +1,12 @@
 <?php
+/*
+Square spiral of sums of selected preceding terms, starting at 1.
+http://oeis.org/A141481
+(founded thanks to exported sequence)
 
+Another solutions for looping in spiral:
+https://stackoverflow.com/questions/398299/looping-in-a-spiral
+*/
 $point = 289326;
 $index = 1;
 $x = 0;
@@ -11,6 +18,7 @@ $up = false;
 $down = false;
 $direction = 0;
 $matrix[0][0] = 1;
+$data[] = 1;
 while ($index <= $point) {
     $forFuckSake = 0;
     while ($forFuckSake < 2) {
@@ -22,9 +30,10 @@ while ($index <= $point) {
             elseif ($down) $y--;
 
             $matrix[$x][$y] = calcValue($matrix, $x, $y);
-
+            $data[] = calcValue($matrix, $x, $y);
             if ($matrix[$x][$y] > $point) {
-                echo $matrix[$x][$y];
+                // echo $matrix[$x][$y];
+                printData($data);
                 return;
             }
 
@@ -53,6 +62,13 @@ while ($index <= $point) {
         $forFuckSake++;
     }
     $steps++;
+}
+
+function printData($data)
+{
+    foreach ($data as $value) {
+        echo "$value, ";
+    }
 }
 
 function calcValue($matrix, $x, $y)
